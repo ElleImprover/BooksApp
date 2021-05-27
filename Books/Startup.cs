@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Books.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,6 +25,7 @@ namespace Books
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<BookData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,9 +50,23 @@ namespace Books
 
             app.UseEndpoints(endpoints =>
             {
+
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+                //ED-ADDED custom routing
+                endpoints.MapControllerRoute(
+                name: "singleblogpost",
+                pattern: "/blog/{year}/{month}/{day}/{slug}",
+                new { controller = "Blog", action = "SingleBlogPost" });
+
+                endpoints.MapControllerRoute(name: "blogCategory", pattern: "/blog/category/{name}",
+                new { controller = "Blog", action = "BlogCategory" }
+
+                );
+
             });
         }
     }

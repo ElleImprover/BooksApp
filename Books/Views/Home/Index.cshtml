@@ -2,7 +2,15 @@
     ViewData["Title"] = "Home Page";
 }
 
+    @Model Books.ViewModel.HomeViewModel
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Here's the books:  </h1><br>
+    <p>@Model.message</p>
+    <ul>
+        @foreach (var book in Model.Books)
+        {
+            <li> book.title</li>
+        }
+    </ul>
 </div>
